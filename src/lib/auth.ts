@@ -5,7 +5,29 @@ import { db } from "@/db";
 import * as schema from "@/db/schema";
 import { seedDefaultCategories } from "@/db/seed-defaults";
 
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : undefined;
+
+const baseURL =
+  process.env.BETTER_AUTH_URL?.trim() || vercelUrl || "http://localhost:3000";
+
+const trustedOrigins = Array.from(
+  new Set([
+    baseURL,
+    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
+      : []),
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+    "http://localhost:3000",
+  ])
+);
+
 export const auth = betterAuth({
+  baseURL,
+  trustedOrigins,
   database: drizzleAdapter(db, {
     provider: "sqlite",
     schema,
