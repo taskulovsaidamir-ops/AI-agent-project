@@ -1,0 +1,23 @@
+# Dependencies
+/node_modules
+
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Environment variables (secrets)
+.env
+.env*.local
+
+# Local SQLite DB (if used in dev)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Debug / OS
+npm-debug.log*
+.DS_Store
+Thumbs.db
